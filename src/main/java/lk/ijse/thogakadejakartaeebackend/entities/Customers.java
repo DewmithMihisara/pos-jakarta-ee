@@ -27,7 +27,7 @@ public class Customers {
     @Column(name = "customer_salary")
     private double salary;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-//    private List<Order> orders = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    private List<Order> orders = new ArrayList<>();
 
 }
