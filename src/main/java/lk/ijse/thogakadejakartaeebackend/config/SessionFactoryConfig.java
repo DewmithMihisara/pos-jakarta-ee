@@ -33,7 +33,7 @@ public class SessionFactoryConfig {
     public static SessionFactoryConfig getInstance(){
         return (sessionFactoryConfig == null) ? sessionFactoryConfig = new SessionFactoryConfig() : sessionFactoryConfig;
     }
-    public Session getSessionFactory(){
+    public Session getSession(){
         return sessionFactory.openSession();
     }
 }
