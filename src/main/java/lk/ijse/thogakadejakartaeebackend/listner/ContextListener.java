@@ -14,8 +14,8 @@ public class ContextListener implements ServletContextListener {
 
         BasicDataSource dbcp = new BasicDataSource();
         dbcp.setUsername("root");
-        dbcp.setPassword("MYsql@123@");
-        dbcp.setUrl("jdbc:mysql://localhost:3306/gdse66_hello");
+        dbcp.setPassword("Dew@2005");
+        dbcp.setUrl("jdbc:mysql://localhost:3306/pos_jakarta_ee");
         dbcp.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dbcp.setInitialSize(2);
         dbcp.setMaxTotal(5);
