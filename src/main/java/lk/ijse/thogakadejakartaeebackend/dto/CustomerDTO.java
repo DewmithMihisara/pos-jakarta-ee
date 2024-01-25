@@ -1,4 +1,4 @@
-package lk.ijse.thogakadejakartaeebackend.entities;
+package lk.ijse.thogakadejakartaeebackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Customers implements Serializable {
+public class CustomerDTO implements Serializable {
     private String id;
     private String name;
     private String address;
