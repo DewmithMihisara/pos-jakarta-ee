@@ -23,4 +23,9 @@ public class CustomerBOImpl implements CustomerBO {
         }
         return arrayList;
     }
+
+    @Override
+    public boolean saveCustomer(CustomerDTO customerDTO, BasicDataSource dbcp) throws SQLException, ClassNotFoundException {
+        return customerDAO.save( new Customers(customerDTO.getId(), customerDTO.getName(),customerDTO.getAddress()),dbcp);
+    }
 }

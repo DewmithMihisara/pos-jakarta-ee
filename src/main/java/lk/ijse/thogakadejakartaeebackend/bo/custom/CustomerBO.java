@@ -10,4 +10,6 @@ import java.util.ArrayList;
 public interface CustomerBO extends SuperBO {
 
     ArrayList<CustomerDTO> getAllCustomers(BasicDataSource dbcp) throws SQLException, ClassNotFoundException;
+
+    boolean saveCustomer(CustomerDTO customerDTO, BasicDataSource dbcp) throws SQLException, ClassNotFoundException;
 }
