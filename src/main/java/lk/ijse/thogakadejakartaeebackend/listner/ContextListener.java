@@ -6,6 +6,8 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import java.sql.SQLException;
+
 @WebListener(value = "seveletContextListener")
 public class ContextListener implements ServletContextListener {
     @Override
@@ -26,6 +28,13 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        ServletContext servletContext = sce.getServletContext();
+        BasicDataSource dbcp = (BasicDataSource) servletContext.getAttribute("dbcp");
+        try {
+            dbcp.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
