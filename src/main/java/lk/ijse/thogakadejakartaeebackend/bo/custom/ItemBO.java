@@ -12,4 +12,6 @@ public interface ItemBO extends SuperBO {
     ArrayList<ItemDTO> getAllItem(DataSource pool) throws SQLException, ClassNotFoundException;
 
     boolean saveItem(ItemDTO itemDTO, DataSource pool) throws SQLException, ClassNotFoundException;
+
+    boolean updateItem(ItemDTO itemDTO, DataSource pool) throws SQLException, ClassNotFoundException;
 }

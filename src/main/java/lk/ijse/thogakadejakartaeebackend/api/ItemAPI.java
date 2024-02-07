@@ -73,4 +73,30 @@ public class ItemAPI extends HttpServlet {
             }
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        ItemDTO itemDTO = jsonb.fromJson(req.getReader(), ItemDTO.class);
+
+        String code = itemDTO.getCode();
+        BigDecimal unitPrice = itemDTO.getUnitPrice();
+        int qtyOnHand = itemDTO.getQtyOnHand();
+        String description = itemDTO.getDescription();
+
+        if(Validation.validateIdItm(code) && Validation.validateName(description) && Validation.validateNo(qtyOnHand) && Validation.validatePrice(unitPrice)){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Some data empty or invalid");
+            return;
+        }else {
+            try {
+                if (itemBO.updateItem(itemDTO,pool)){
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                }else {
+                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
 }

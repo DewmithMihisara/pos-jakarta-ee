@@ -10,7 +10,6 @@ import lk.ijse.thogakadejakartaeebackend.entities.Item;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ITEM);
     @Override
@@ -26,5 +25,10 @@ public class ItemBOImpl implements ItemBO {
     @Override
     public boolean saveItem(ItemDTO itemDTO, DataSource pool) throws SQLException, ClassNotFoundException {
         return itemDAO.save(new Item(itemDTO.getCode(), itemDTO.getDescription(), itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()),pool);
+    }
+
+    @Override
+    public boolean updateItem(ItemDTO itemDTO, DataSource pool) throws SQLException, ClassNotFoundException {
+        return itemDAO.update(new Item(itemDTO.getCode(), itemDTO.getDescription(), itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()),pool);
     }
 }
