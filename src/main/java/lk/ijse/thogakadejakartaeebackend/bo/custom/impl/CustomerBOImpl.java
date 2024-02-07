@@ -18,7 +18,6 @@ public class CustomerBOImpl implements CustomerBO {
     CustomerDAO customerDAO= DAOFactory.getDAOFactory().getDAO(CUSTOMER);
     @Override
     public ArrayList<CustomerDTO> getAllCustomers(DataSource pool) throws SQLException, ClassNotFoundException {
-        System.out.println("call getAllCustomers in CustomerBOImpl");
         ArrayList<Customers> all = customerDAO.getAll(pool);
         ArrayList<CustomerDTO> arrayList= new ArrayList<>();
         for (Customers c : all) {
@@ -30,5 +29,10 @@ public class CustomerBOImpl implements CustomerBO {
     @Override
     public boolean saveCustomer(CustomerDTO customerDTO,DataSource pool) throws SQLException, ClassNotFoundException {
         return customerDAO.save( new Customers(customerDTO.getId(), customerDTO.getName(),customerDTO.getAddress()),pool);
+    }
+
+    @Override
+    public boolean updateCustomer(CustomerDTO customerDTO, DataSource pool) throws SQLException, ClassNotFoundException {
+        return customerDAO.update( new Customers(customerDTO.getId(), customerDTO.getName(),customerDTO.getAddress()),pool);
     }
 }
