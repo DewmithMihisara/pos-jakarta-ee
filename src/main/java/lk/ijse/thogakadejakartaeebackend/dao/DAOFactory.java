@@ -1,6 +1,7 @@
 package lk.ijse.thogakadejakartaeebackend.dao;
 
 import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.ItemDAOImpl;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -22,7 +23,7 @@ public class DAOFactory {
             case CUSTOMER:
                 return (T) new CustomerDAOImpl();
             case ITEM:
-//                return (T) new ItemDAOImpl();
+                return (T) new ItemDAOImpl();
             case ORDER:
 //                return (T) new OrderDAOImpl();
             case ORDER_DETAILS:

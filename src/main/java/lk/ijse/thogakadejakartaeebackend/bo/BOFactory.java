@@ -1,6 +1,7 @@
 package lk.ijse.thogakadejakartaeebackend.bo;
 
 import lk.ijse.thogakadejakartaeebackend.bo.custom.impl.CustomerBOImpl;
+import lk.ijse.thogakadejakartaeebackend.bo.custom.impl.ItemBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -20,7 +21,7 @@ public class BOFactory {
             case CUSTOMER_BO:
                 return (T) new CustomerBOImpl();
             case ITEM_BO:
-//                return (T) new ItemBOImpl();
+                return (T) new ItemBOImpl();
             case PURCHASE_ORDER_BO:
 //                return (T) new PurchaseOrderBOImpl();
             default:
