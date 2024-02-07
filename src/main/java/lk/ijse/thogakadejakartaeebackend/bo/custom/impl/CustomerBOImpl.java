@@ -35,4 +35,9 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean updateCustomer(CustomerDTO customerDTO, DataSource pool) throws SQLException, ClassNotFoundException {
         return customerDAO.update( new Customers(customerDTO.getId(), customerDTO.getName(),customerDTO.getAddress()),pool);
     }
+
+    @Override
+    public boolean deleteCustomer(String id, DataSource pool) throws SQLException, ClassNotFoundException {
+        return customerDAO.delete(id,pool);
+    }
 }

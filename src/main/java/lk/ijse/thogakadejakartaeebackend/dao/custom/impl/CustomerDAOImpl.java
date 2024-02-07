@@ -39,7 +39,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean delete(String s, DataSource pool) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.execute(pool,"DELETE FROM customer WHERE id=?", s);
     }
 
     @Override
