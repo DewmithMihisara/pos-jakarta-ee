@@ -1,6 +1,7 @@
 package lk.ijse.thogakadejakartaeebackend.dao.custom.impl;
 
 import lk.ijse.thogakadejakartaeebackend.dao.custom.OrderDetailDAO;
+import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.util.SQLUtil;
 import lk.ijse.thogakadejakartaeebackend.entities.OrderDetail;
 
 import javax.sql.DataSource;
@@ -15,7 +16,8 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
 
     @Override
     public boolean save(OrderDetail dto, DataSource pool) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.execute(pool,"INSERT INTO order_detail (orderId, itemCode, qty ,unitPrice) VALUES (?,?,?,?)", dto.getOrderId(), dto.getItemCode(), dto.getQty(), dto.getPrice());
+
     }
 
     @Override
