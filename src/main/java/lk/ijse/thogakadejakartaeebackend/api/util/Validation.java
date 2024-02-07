@@ -1,6 +1,10 @@
 package lk.ijse.thogakadejakartaeebackend.api.util;
 
+import lk.ijse.thogakadejakartaeebackend.dto.OrderDetailDTO;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 public class Validation {
     public static boolean validateIdCus(String id){
@@ -24,5 +28,17 @@ public class Validation {
 
     public static boolean validatePrice(BigDecimal unitPrice) {
         return unitPrice.compareTo(new BigDecimal(0)) >= 0;
+    }
+
+    public static boolean validateOrderDetails(List<OrderDetailDTO> detaisList) {
+        return detaisList.size() > 0;
+    }
+
+    public static boolean validateIdOrder(String id) {
+        return id.matches("[O][0-9]{3}");
+    }
+
+    public static boolean validateDate(LocalDate date) {
+        return date == null;
     }
 }
