@@ -99,4 +99,18 @@ public class ItemAPI extends HttpServlet {
             }
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String code = req.getParameter("code");
+        try {
+            if (itemBO.deleteItem(code,pool)){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }else {
+                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
