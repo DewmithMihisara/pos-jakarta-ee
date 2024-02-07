@@ -22,7 +22,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean save(Item dto, DataSource pool) throws SQLException, ClassNotFoundException {
-        return false;
+        return SQLUtil.execute(pool,"INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)", dto.getCode(), dto.getDescription(), dto.getUnitPrice(), dto.getQtyOnHand());
     }
 
     @Override

@@ -22,4 +22,9 @@ public class ItemBOImpl implements ItemBO {
         }
         return list;
     }
+
+    @Override
+    public boolean saveItem(ItemDTO itemDTO, DataSource pool) throws SQLException, ClassNotFoundException {
+        return itemDAO.save(new Item(itemDTO.getCode(), itemDTO.getDescription(), itemDTO.getQtyOnHand(), itemDTO.getUnitPrice()),pool);
+    }
 }
