@@ -42,6 +42,10 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public Item search(String s, DataSource pool) throws SQLException, ClassNotFoundException {
+        ResultSet rst = SQLUtil.execute(pool,"SELECT * FROM Item WHERE code=?", s);
+        if (rst.next()) {
+            return new Item(rst.getString(1), rst.getString(2),  rst.getInt(3),rst.getBigDecimal(4));
+        }
         return null;
     }
 }
