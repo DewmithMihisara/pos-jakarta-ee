@@ -1,5 +1,6 @@
 package lk.ijse.thogakadejakartaeebackend.api;
 
+import jakarta.annotation.Resource;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletContext;
@@ -14,6 +15,7 @@ import lk.ijse.thogakadejakartaeebackend.bo.custom.CustomerBO;
 import lk.ijse.thogakadejakartaeebackend.dto.CustomerDTO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,18 +23,20 @@ import java.util.ArrayList;
 
 @WebServlet(name = "CustomerAPI", urlPatterns = "/customers", loadOnStartup = 1)
 public class CustomerAPI extends HttpServlet {
+    @Resource(name = "java:comp/env/jdbc/pos")
+    private static DataSource pool;
     CustomerBO customerBO= BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER_BO);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
 
-        ServletContext sc = getServletContext();
-        BasicDataSource dbcp = (BasicDataSource) sc.getAttribute("dbcp");
+        System.out.println("call Api");
+
         ArrayList<CustomerDTO> allCustomers = null;
         try {
-            allCustomers = customerBO.getAllCustomers(dbcp);
+            allCustomers = customerBO.getAllCustomers(pool);
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            System.out.println(e.getMessage());
         }
         resp.setContentType("application/json");
         Jsonb jsonb = JsonbBuilder.create();
@@ -41,9 +45,6 @@ public class CustomerAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ServletContext sc = getServletContext();
-        BasicDataSource dbcp = (BasicDataSource) sc.getAttribute("dbcp");
-
         Jsonb jsonb = JsonbBuilder.create();
         CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
 
@@ -56,7 +57,7 @@ public class CustomerAPI extends HttpServlet {
             return;
         }else {
             try {
-                if (customerBO.saveCustomer(customerDTO , dbcp)){
+                if (customerBO.saveCustomer(customerDTO,pool)){
                     resp.setStatus(HttpServletResponse.SC_CREATED);
                 }else {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -65,6 +66,5 @@ public class CustomerAPI extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         }
-
     }
 }

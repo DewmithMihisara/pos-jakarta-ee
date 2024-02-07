@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <Resource name="jdbc/pos"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="500"
+              maxIdle="100"
+              maxWaitMillis="-1"
+              username="root"
+              password="Dew@2005"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/pos_jakarta_ee"/>
+</Context>

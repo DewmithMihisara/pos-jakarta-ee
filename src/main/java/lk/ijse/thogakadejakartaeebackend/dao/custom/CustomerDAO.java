@@ -5,7 +5,8 @@ import lk.ijse.thogakadejakartaeebackend.dao.SuperDAO;
 import lk.ijse.thogakadejakartaeebackend.entities.Customers;
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 
-public interface CustomerDAO extends CrudDAO<Customers, String, BasicDataSource> {
+public interface CustomerDAO extends CrudDAO<Customers, String, DataSource> {
 }
