@@ -2,6 +2,7 @@ $(document).ready(function () {
     getCusIds();
     setCusCmbAction()
     setDate();
+    setItmIds();
     setItmCmbAction();
 });
 function getCusIds() {
@@ -31,7 +32,7 @@ function setDate(){
     let today = year + '-' + month + '-' + day;
     $('#date-txt').val(today);
 }
-function setItmCmbAction(){
+function setItmIds(){
     $('#itm-id-slt-bx').empty();
     $.ajax({
         url: "http://localhost:8080/thogakade_jakarta/item",
@@ -39,8 +40,27 @@ function setItmCmbAction(){
         success: function (resp) {
             console.log("Success: ", resp);
             for (const item of resp) {
-                $('#itm-id-slt-bx').append(`<option value=${item}>${item.code}</option>`);
+                let optionValue = `${item.description},${item.qtyOnHand},${item.unitPrice}`;
+                $('#itm-id-slt-bx').append(`<option value=${optionValue}>${item.code}</option>`);
             }
         }
+    });
+}
+function setItmCmbAction(){
+    $('#itm-id-slt-bx').on('change', function() {
+        var selectedValue = $(this).val();
+        var optionValues = selectedValue.split(',');
+        var description = optionValues[0];
+        var qtyOnHand = optionValues[1];
+        var unitPrice = optionValues[2];
+
+        console.log("Description: " + description);
+        console.log("Quantity on Hand: " + qtyOnHand);
+        console.log("Unit Price: " + unitPrice);
+
+        $('#itm-des-or-txt').val(description);
+        $('#qoh-or-txt').val(qtyOnHand);
+        $('#prz-or-txt').val(unitPrice);
+
     });
 }

@@ -50,7 +50,6 @@ public class CustomerAPI extends HttpServlet {
         Jsonb jsonb = JsonbBuilder.create();
         jsonb.toJson(allCustomers,resp.getWriter());
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Jsonb jsonb = JsonbBuilder.create();
