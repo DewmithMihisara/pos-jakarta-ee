@@ -552,33 +552,33 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-xxl-4 border mx-3 rounded-5">
                 <form class="row g-3 mt-2">
                     <div class="col-12">
-                        <label for="code" class="form-label">Item Code</label>
-                        <input type="text" class="form-control" id="code" placeholder="I-0001">
+                        <label for="itm-code-txt" class="form-label">Item Code</label>
+                        <input type="text" class="form-control" id="itm-code-txt" placeholder="I-0001">
                     </div>
                     <div class="col-12">
-                        <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="description" placeholder="Sunlight">
+                        <label for="itm-des-txt" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="itm-des-txt" placeholder="Sunlight">
                     </div>
                     <div class="col-12">
-                        <label for="hQty" class="form-label">Qty.on Hand</label>
-                        <input type="text" class="form-control" id="hQty" placeholder="10">
+                        <label for="itm-qty-txt" class="form-label">Qty.on Hand</label>
+                        <input type="text" class="form-control" id="itm-qty-txt" placeholder="10">
                     </div>
-                    <label for="price" class="form-label">Unit Price</label>
+                    <label for="itm-prz-txt" class="form-label">Unit Price</label>
                     <div class="input-group mb-3 col-12">
                         <span class="input-group-text">Rs.</span>
-                        <input type="text" class="form-control" id="price" aria-label="Amount (to the nearest rupee)"
+                        <input type="text" class="form-control" id="itm-prz-txt" aria-label="Amount (to the nearest rupee)"
                                placeholder="Price">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-success" id="itm-sv-btn">Save</button>
+                        <button type="submit" class="btn btn-primary" id="itm-up-btn">Update</button>
+                        <button type="submit" class="btn btn-danger" id="itm-dl-btn">Delete</button>
                     </div>
                 </form>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 border rounded-5">
-                <table class="table mt-2 table-hover">
+                <table id="itm-tbl" class="table mt-2 table-hover">
                     <thead>
                     <tr>
                         <th scope="col">Code</th>
@@ -587,25 +587,7 @@
                         <th scope="col">Price</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">I-001</th>
-                        <td>Sunlight</td>
-                        <td>10</td>
-                        <td>100.00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">I-002</th>
-                        <td>life boy</td>
-                        <td>30</td>
-                        <td>120.00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">I-003</th>
-                        <td>tipi tip</td>
-                        <td>100</td>
-                        <td>100.00</td>
-                    </tr>
+                    <tbody id="itm-tbl-bdy">
                     </tbody>
                 </table>
             </div>
