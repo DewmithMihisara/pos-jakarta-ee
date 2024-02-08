@@ -35,7 +35,6 @@ function setActionItm() {
         $('#itm-prz-txt').val(price);
     });
 }
-
 $('#itm-sv-btn').click(function () {
     const code = $('#itm-code-txt').val();
     const des = $('#itm-des-txt').val();
