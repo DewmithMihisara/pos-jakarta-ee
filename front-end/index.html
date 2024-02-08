@@ -650,10 +650,10 @@
                     </div>
                     <div class="col-4">
                         <label for="qty-or-txt" class="form-label">Qty</label>
-                        <input type="text" class="form-control" id="qty-or-txt" placeholder="2">
+                        <input type="text" class="form-control" id="qty-or-txt">
                     </div>
                     <div class="col-12 d-flex">
-                        <button type="submit" class="btn btn-primary ms-auto p-2"><i class="bi bi-plus"></i>Add</button>
+                        <button type="submit" class="btn btn-primary ms-auto p-2" id="add-btn"><i class="bi bi-plus"></i>Add</button>
                     </div>
                 </form>
             </div>
@@ -671,21 +671,7 @@
                         <th scope="col">Delete</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">I-001</th>
-                        <td>Sunlight</td>
-                        <td>10</td>
-                        <td>100.00</td>
-                        <td>1000.00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">I-002</th>
-                        <td>Life Boy</td>
-                        <td>2</td>
-                        <td>120.00</td>
-                        <td>240.00</td>
-                    </tr>
+                    <tbody id="order-tbl">
                     </tbody>
                 </table>
             </div>

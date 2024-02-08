@@ -59,3 +59,24 @@ function setItmCmbAction(){
         $('#prz-or-txt').val(unitPrice);
     });
 }
+$('#add-btn').click(function () {
+    let code = $('#itm-id-slt-bx').val();
+    let description = $('#itm-des-or-txt').val();
+    let qty = $('#qty-or-txt').val();
+    let unitPrice = $('#prz-or-txt').val();
+    let total = qty * unitPrice;
+
+    console.log(code);
+    console.log(description);
+    console.log(qty);
+    console.log(unitPrice);
+    console.log(total);
+
+    $('#order-tbl').append(`<tr>
+        <td>${code}</td>
+        <td>${description}</td>
+        <td>${qty}</td>
+        <td>${unitPrice}</td>
+        <td>${total}</td>
+    </tr>`);
+});
