@@ -6,6 +6,8 @@ import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.util.SQLUtil;
 import lk.ijse.thogakadejakartaeebackend.entities.Customers;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,9 +17,13 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public ArrayList<Customers> getAll(DataSource pool) throws SQLException, ClassNotFoundException {
         ArrayList<Customers> allCustomers = new ArrayList<>();
-        ResultSet rst = SQLUtil.execute(pool,"SELECT * FROM Customer");
-        while (rst.next()) {
-            allCustomers.add(new Customers(rst.getString(1), rst.getString(2), rst.getString(3)));
+        String sql= "SELECT * FROM Customer";
+        try(Connection connection=pool.getConnection()){
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet rst1 = pstm.executeQuery();
+            while (rst1.next()){
+                allCustomers.add(new Customers(rst1.getString(1), rst1.getString(2), rst1.getString(3)));
+            }
         }
         return allCustomers;
     }

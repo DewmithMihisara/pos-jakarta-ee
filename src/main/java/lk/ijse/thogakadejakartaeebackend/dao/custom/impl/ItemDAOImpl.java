@@ -5,6 +5,8 @@ import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.util.SQLUtil;
 import lk.ijse.thogakadejakartaeebackend.entities.Item;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,10 +14,14 @@ import java.util.ArrayList;
 public class ItemDAOImpl implements ItemDAO {
     @Override
     public ArrayList<Item> getAll(DataSource pool) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute(pool,"SELECT * FROM Item");
         ArrayList<Item> allItems = new ArrayList<>();
-        while (rst.next()) {
-            allItems.add(new Item(rst.getString(1), rst.getString(2), rst.getInt(3),rst.getBigDecimal(4)));
+        String sql= "SELECT * FROM Item";
+        try(Connection connection=pool.getConnection()){
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            ResultSet rst1 = pstm.executeQuery();
+            while (rst1.next()){
+                allItems.add(new Item(rst1.getString(1), rst1.getString(2), rst1.getInt(3),rst1.getBigDecimal(4)));
+            }
         }
         return allItems;
     }
