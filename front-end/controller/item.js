@@ -106,3 +106,22 @@ $('#itm-up-btn').click(function () {
         }
     })
 });
+$('#itm-dl-btn').click(function () {
+    const code = $('#itm-code-txt').val();
+
+    $.ajax({
+        url: "http://localhost:8080/thogakade_jakarta/item?code=" + code,
+        method: "DELETE",
+        success: function (resp, textStatus, jqxhr) {
+            console.log("success: ", resp);
+            console.log("success: ", textStatus);
+            console.log("success: ", jqxhr);
+            getAllItm();
+        },
+        error: function (jqxhr, textStatus, error) {
+            console.log("error: ", jqxhr);
+            console.log("error: ", textStatus);
+            console.log("error: ", error);
+        }
+    })
+});
