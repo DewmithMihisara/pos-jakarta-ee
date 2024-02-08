@@ -1,3 +1,36 @@
+$(document).ready(function (){
+    getAll();
+    setAction();
+});
+function getAll() {
+    $('#cus-tbl-body').empty();
+
+    $.ajax({
+        url: "http://localhost:8080/thogakade_jakarta/customers",
+        method: "GET",
+        success: function (resp) {
+            console.log("Success: ", resp);
+            for (const customer of resp) {
+                $('#cus-tbl-body').append(`<tr>
+                    <td>${customer.id}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.address}</td>
+                </tr>`);
+            }
+        }
+    });
+}
+function setAction(){
+    $('#cus-tbl-body').on('click', 'tr', function() {
+        let id = $(this).find('td:eq(0)').text();
+        let name = $(this).find('td:eq(1)').text();
+        let address = $(this).find('td:eq(2)').text();
+
+        $('#cus-id-txt').val(id);
+        $('#cus-name-txt').val(name);
+        $('#cus-address-txt').val(address);
+    });
+}
 $('#cus-sv-btn').click(function () {
     const cusID = $('#cus-id-txt').val();
     const cusName = $('#cus-name-txt').val();
@@ -22,6 +55,7 @@ $('#cus-sv-btn').click(function () {
             console.log("success: ", jqxhr);
             if (jqxhr.status == 201)
                 alert(jqxhr.responseText);
+            getAll();
         },
         error: function (jqxhr, textStatus, error) {
             console.log("error: ", jqxhr);
@@ -54,6 +88,7 @@ $('#cus-up-btn').click(function () {
             console.log("success: ", jqxhr);
             if (jqxhr.status == 201)
                 alert(jqxhr.responseText);
+            getAll();
         },
         error: function (jqxhr, textStatus, error) {
             console.log("error: ", jqxhr);
@@ -72,6 +107,7 @@ $('#cus-dl-btn').click(function () {
             console.log("success: ", resp);
             console.log("success: ", textStatus);
             console.log("success: ", jqxhr);
+            getAll();
         },
         error: function (jqxhr, textStatus, error) {
             console.log("error: ", jqxhr);
