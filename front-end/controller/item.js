@@ -71,3 +71,38 @@ $('#itm-sv-btn').click(function () {
         }
     })
 });
+$('#itm-up-btn').click(function () {
+    const code = $('#itm-code-txt').val();
+    const des = $('#itm-des-txt').val();
+    const qty = $('#itm-qty-txt').val();
+    const price = $('#itm-prz-txt').val();
+
+    const itmObj = {
+        code: code,
+        description: des,
+        qtyOnHand: qty,
+        unitPrice: price
+    }
+
+    const jsonObj = JSON.stringify(itmObj);
+
+    $.ajax({
+        url: "http://localhost:8080/thogakade_jakarta/item",
+        method: "PUT",
+        data: jsonObj,
+        contentType: "application/json",
+        success: function (resp, textStatus, jqxhr) {
+            console.log("success: ", resp);
+            console.log("success: ", textStatus);
+            console.log("success: ", jqxhr);
+            if (jqxhr.status == 201)
+                alert(jqxhr.responseText);
+            getAllItm();
+        },
+        error: function (jqxhr, textStatus, error) {
+            console.log("error: ", jqxhr);
+            console.log("error: ", textStatus);
+            console.log("error: ", error);
+        }
+    })
+});
