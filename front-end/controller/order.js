@@ -1,6 +1,7 @@
 $(document).ready(function () {
     getCusIds();
     setCusCmbAction()
+    setDate();
 });
 function getCusIds() {
     $('#cus-id-slt-bx').empty();
@@ -20,4 +21,12 @@ function setCusCmbAction(){
         let selectedValue = $(this).val();
         $('#cus-name-or-txt').val(selectedValue);
     });
+}
+function setDate(){
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let today = year + '-' + month + '-' + day;
+    $('#date-txt').val(today);
 }
