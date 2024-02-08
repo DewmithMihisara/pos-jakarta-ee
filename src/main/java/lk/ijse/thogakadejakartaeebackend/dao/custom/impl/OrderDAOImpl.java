@@ -18,7 +18,7 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean save(Order dto, DataSource pool) throws SQLException, ClassNotFoundException {
-        return SQLUtil.execute(pool,"INSERT INTO `orders` (id, date, customerID) VALUES (?,?,?)", dto.getOrderId(), Date.valueOf(dto.getDate()), dto.getCustomerID());
+        return SQLUtil.execute(pool,"INSERT INTO `Orders` (oid, date, customerID) VALUES (?,?,?)", dto.getOrderId(), Date.valueOf(dto.getDate()), dto.getCustomerID());
     }
 
     @Override
@@ -28,8 +28,18 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean exist(String s, DataSource pool) throws SQLException, ClassNotFoundException {
-        ResultSet rst = SQLUtil.execute(pool,"SELECT id FROM `Orders` WHERE id=?", s);
-        return rst.next();
+        System.out.println("in exist method of OrderDAOImpl : s : " + s);
+        ResultSet rst = SQLUtil.execute(pool,"SELECT oid FROM `Orders` WHERE oid=?", s);
+        System.out.println("this is rst :"+rst);
+
+        System.out.println(rst.next());
+
+        if (rst.next()){
+            System.out.println("true");
+            return false;
+        }else {
+            return true;
+        }
     }
 
     @Override

@@ -27,40 +27,40 @@ public class OrderBOImpl implements OrderBO {
 
             if (orderDAO.exist(orderDTO.getId(),pool)){
                 return false;
-            }
+            }else {
+                connection.setAutoCommit(false);
 
-            connection.setAutoCommit(false);
+                Order orderEntity = new Order(orderDTO.getId(), orderDTO.getDate(), orderDTO.getCustomerId());
+                boolean orderAdded = orderDAO.save(orderEntity,pool);
+                if (!orderAdded) {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                    return false;
+                }
 
-            Order orderEntity = new Order(orderDTO.getId(), orderDTO.getDate(), orderDTO.getCustomerId());
-            boolean orderAdded = orderDAO.save(orderEntity,pool);
-            if (!orderAdded) {
-                connection.rollback();
+                for (OrderDetailDTO odDTO : orderDTO.getOrderDetaisList()) {
+                    OrderDetail orderDetailsEntity = new OrderDetail(odDTO.getOrderId(), odDTO.getItemCode(), odDTO.getQty(), odDTO.getUnitPrice());
+                    boolean odAdded = orderDetailsDAO.save(orderDetailsEntity,pool);
+                    if (!odAdded) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return false;
+                    }
+
+                    ItemDTO item = findItemByID(orderDetailsEntity.getItemCode(), pool);
+                    item.setQtyOnHand(item.getQtyOnHand() - orderDetailsEntity.getQty());
+                    boolean itemUpdate = itemDAO.update(new Item(item.getCode(), item.getDescription() ,item.getQtyOnHand(), item.getUnitPrice()),  pool);
+
+                    if (!itemUpdate) {
+                        connection.rollback();
+                        connection.setAutoCommit(true);
+                        return false;
+                    }
+                }
+                connection.commit();
                 connection.setAutoCommit(true);
-                return false;
+                return true;
             }
-
-            for (OrderDetailDTO odDTO : orderDTO.getOrderDetaisList()) {
-                OrderDetail orderDetailsEntity = new OrderDetail(odDTO.getOrderId(), odDTO.getItemCode(), odDTO.getQty(), odDTO.getUnitPrice());
-                boolean odAdded = orderDetailsDAO.save(orderDetailsEntity,pool);
-                if (!odAdded) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-
-                ItemDTO item = findItemByID(orderDetailsEntity.getItemCode(), pool);
-                item.setQtyOnHand(item.getQtyOnHand() - orderDetailsEntity.getQty());
-                boolean itemUpdate = itemDAO.update(new Item(item.getCode(), item.getDescription() ,item.getQtyOnHand(), item.getUnitPrice()),  pool);
-
-                if (!itemUpdate) {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                    return false;
-                }
-            }
-            connection.commit();
-            connection.setAutoCommit(true);
-            return true;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

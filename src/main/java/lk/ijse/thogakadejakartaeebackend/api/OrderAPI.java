@@ -54,6 +54,7 @@ public class OrderAPI extends HttpServlet {
                     resp.getWriter().write("Added order successfully");
                 }else {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to save the order");
+                    System.out.println("fail in save");
                 }
 
             }catch (Exception e){
