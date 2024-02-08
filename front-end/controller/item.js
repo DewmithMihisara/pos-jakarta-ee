@@ -1,7 +1,8 @@
-$(document).ready(function (){
+$(document).ready(function () {
     getAllItm();
     setActionItm();
 });
+
 function getAllItm() {
     $('#itm-tbl-bdy').empty();
     $.ajax({
@@ -20,8 +21,9 @@ function getAllItm() {
         }
     });
 }
-function setActionItm(){
-    $('#itm-tbl-bdy').on('click', 'tr', function() {
+
+function setActionItm() {
+    $('#itm-tbl-bdy').on('click', 'tr', function () {
         let code = $(this).find('td:eq(0)').text();
         let des = $(this).find('td:eq(1)').text();
         let qty = $(this).find('td:eq(2)').text();
@@ -33,3 +35,39 @@ function setActionItm(){
         $('#itm-prz-txt').val(price);
     });
 }
+
+$('#itm-sv-btn').click(function () {
+    const code = $('#itm-code-txt').val();
+    const des = $('#itm-des-txt').val();
+    const qty = $('#itm-qty-txt').val();
+    const price = $('#itm-prz-txt').val();
+
+    const itmObj = {
+        code: code,
+        description: des,
+        qtyOnHand: qty,
+        unitPrice: price
+    }
+
+    const jsonObj = JSON.stringify(itmObj);
+
+    $.ajax({
+        url: "http://localhost:8080/thogakade_jakarta/item",
+        method: "POST",
+        data: jsonObj,
+        contentType: "application/json",
+        success: function (resp, textStatus, jqxhr) {
+            console.log("success: ", resp);
+            console.log("success: ", textStatus);
+            console.log("success: ", jqxhr);
+            if (jqxhr.status == 201)
+                alert(jqxhr.responseText);
+            getAllItm();
+        },
+        error: function (jqxhr, textStatus, error) {
+            console.log("error: ", jqxhr);
+            console.log("error: ", textStatus);
+            console.log("error: ", error);
+        }
+    })
+});
