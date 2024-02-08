@@ -48,19 +48,14 @@ function setItmIds(){
 }
 function setItmCmbAction(){
     $('#itm-id-slt-bx').on('change', function() {
-        var selectedValue = $(this).val();
-        var optionValues = selectedValue.split(',');
-        var description = optionValues[0];
-        var qtyOnHand = optionValues[1];
-        var unitPrice = optionValues[2];
-
-        console.log("Description: " + description);
-        console.log("Quantity on Hand: " + qtyOnHand);
-        console.log("Unit Price: " + unitPrice);
+        let selectedValue = $(this).val();
+        let optionValues = selectedValue.split(',');
+        let description = optionValues[0];
+        let qtyOnHand = optionValues[1];
+        let unitPrice = optionValues[2];
 
         $('#itm-des-or-txt').val(description);
         $('#qoh-or-txt').val(qtyOnHand);
         $('#prz-or-txt').val(unitPrice);
-
     });
 }
