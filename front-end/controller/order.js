@@ -15,7 +15,8 @@ function getCusIds() {
         success: function (resp) {
             console.log("Success: ", resp);
             for (const customer of resp) {
-                $('#cus-id-slt-bx').append(`<option value=${customer.name}>${customer.id}</option>`);
+                let optionValue = `${customer.id},${customer.name}`;
+                $('#cus-id-slt-bx').append(`<option value=${optionValue}>${customer.id}</option>`);
             }
         }
     });
@@ -23,15 +24,13 @@ function getCusIds() {
 function setCusCmbAction(){
     $('#cus-id-slt-bx').on('change', function() {
         let selectedValue = $(this).val();
-        $('#cus-name-or-txt').val(selectedValue);
+        let optionValues = selectedValue.split(',');
+        let name = optionValues[1];
+        $('#cus-name-or-txt').val(name);
     });
 }
 function setDate(){
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let today = year + '-' + month + '-' + day;
+    let today = new Date().toISOString().slice(0, 10);
     $('#date-txt').val(today);
 }
 function setItmIds(){
@@ -81,4 +80,57 @@ $('#add-btn').click(function () {
         <td>${unitPrice}</td>
         <td>${total}</td>
     </tr>`);
+});
+
+$('#place-or-btn').click(function () {
+    let orderId = $('#oid-txt').val();
+    let date = $('#date-txt').val();
+
+    let cusBx = $('#cus-id-slt-bx').val();
+    let optionValues = cusBx.split(',');
+    let customerId = optionValues[0];
+
+    let orderDetails = [];
+    $('#order-tbl tr').each(function () {
+        let code = $(this).find('td:eq(0)').text();
+        let qty = $(this).find('td:eq(2)').text();
+        let unitPrice = $(this).find('td:eq(3)').text();
+        let orderDetail = {
+            orderId: orderId,
+            itemCode: code,
+            qty: qty,
+            unitPrice: unitPrice
+        }
+        orderDetails.push(orderDetail);
+    });
+    let order = {
+        id: orderId,
+        date: date,
+        customerId: customerId,
+        orderDetaisList: orderDetails
+    }
+    console.log(order.orderDetaisList);
+    console.log(order.date);
+    console.log(order.customerId);
+    console.log(order.id);
+
+    let jsonObj = JSON.stringify(order);
+    $.ajax({
+        url: "http://localhost:8080/thogakade_jakarta/order",
+        method: "POST",
+        data: jsonObj,
+        contentType: "application/json",
+        success: function (resp, textStatus, jqxhr) {
+            console.log("success: ", resp);
+            console.log("success: ", textStatus);
+            console.log("success: ", jqxhr);
+            if (jqxhr.status == 201)
+                alert(jqxhr.responseText);
+        },
+        error: function (jqxhr, textStatus, error) {
+            console.log("error: ", jqxhr);
+            console.log("error: ", textStatus);
+            console.log("error: ", error);
+        }
+    });
 });

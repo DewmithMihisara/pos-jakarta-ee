@@ -17,6 +17,7 @@ public class CORSFilter extends HttpFilter {
             res.sendError(HttpServletResponse.SC_BAD_REQUEST,"CORS Policy Violation");
             return;
         }
+        System.out.println("come into filter");
         res.addHeader("Access-Control-Allow-Origin", "*");
         res.addHeader("Access-Control-Allow-Headers", "Content-Type");
         res.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTION, HEAD");

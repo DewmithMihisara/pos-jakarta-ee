@@ -2,12 +2,11 @@ package lk.ijse.thogakadejakartaeebackend.dao.custom.impl;
 
 import lk.ijse.thogakadejakartaeebackend.dao.custom.OrderDAO;
 import lk.ijse.thogakadejakartaeebackend.dao.custom.impl.util.SQLUtil;
+import lk.ijse.thogakadejakartaeebackend.entities.Customers;
 import lk.ijse.thogakadejakartaeebackend.entities.Order;
 
 import javax.sql.DataSource;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class OrderDAOImpl implements OrderDAO {
@@ -28,17 +27,16 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public boolean exist(String s, DataSource pool) throws SQLException, ClassNotFoundException {
-        System.out.println("in exist method of OrderDAOImpl : s : " + s);
+
         ResultSet rst = SQLUtil.execute(pool,"SELECT oid FROM `Orders` WHERE oid=?", s);
-        System.out.println("this is rst :"+rst);
+//        return rst.next();
 
-        System.out.println(rst.next());
-
-        if (rst.next()){
-            System.out.println("true");
-            return false;
-        }else {
-            return true;
+        String sql = "SELECT oid FROM `Orders` WHERE oid=?";
+        try(Connection connection=pool.getConnection()){
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1,s);
+            ResultSet rst1 = pstm.executeQuery();
+            return rst1.next();
         }
     }
 

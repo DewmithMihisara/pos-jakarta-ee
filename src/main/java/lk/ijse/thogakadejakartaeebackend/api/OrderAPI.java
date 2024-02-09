@@ -35,18 +35,32 @@ public class OrderAPI extends HttpServlet {
     OrderBO placeOrderBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PURCHASE_ORDER_BO);
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("doPost method in OrderAPI.java file is called...!");
+
         Jsonb jsonb = JsonbBuilder.create();
+
+        System.out.println(jsonb);
+
         OrderDTO orderDTO = jsonb.fromJson(req.getReader(), OrderDTO.class);
+
+        System.out.println(orderDTO == null ? true : false);
+
         String id = orderDTO.getId();
         LocalDate date = orderDTO.getDate();
         String customerId = orderDTO.getCustomerId();
         List<OrderDetailDTO> detaisList = orderDTO.getOrderDetaisList();
 
+        System.out.println(orderDTO);
+        System.out.println(id);
+        System.out.println(date);
+        System.out.println(customerId);
+        System.out.println(detaisList);
 
         if(Validation.validateIdOrder(id) && Validation.validateDate(date) && Validation.validateIdCus(customerId) && Validation.validateOrderDetails(detaisList)){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID is empty or invalid");
             return;
         } else {
+            System.out.println("ok");
             try {
                 boolean saveOrder = placeOrderBO.saveOrder(new OrderDTO(id, date, customerId, detaisList),source);
                 if (saveOrder) {
