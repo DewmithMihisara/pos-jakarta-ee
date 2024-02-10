@@ -44,3 +44,6 @@ main {
 .invalid {
     border: 1px solid red;
 }
+.navbar{
+    z-index: 15;
+}
