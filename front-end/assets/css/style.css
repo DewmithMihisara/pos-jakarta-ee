@@ -40,3 +40,7 @@ main {
 #logo{
     height: 3vh;
 }
+
+.invalid {
+    border: 1px solid red;
+}
