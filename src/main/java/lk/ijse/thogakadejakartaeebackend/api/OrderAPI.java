@@ -50,17 +50,10 @@ public class OrderAPI extends HttpServlet {
         String customerId = orderDTO.getCustomerId();
         List<OrderDetailDTO> detaisList = orderDTO.getOrderDetaisList();
 
-        System.out.println(orderDTO);
-        System.out.println(id);
-        System.out.println(date);
-        System.out.println(customerId);
-        System.out.println(detaisList);
-
         if(Validation.validateIdOrder(id) && Validation.validateDate(date) && Validation.validateIdCus(customerId) && Validation.validateOrderDetails(detaisList)){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID is empty or invalid");
             return;
         } else {
-            System.out.println("ok");
             try {
                 boolean saveOrder = placeOrderBO.saveOrder(new OrderDTO(id, date, customerId, detaisList),source);
                 if (saveOrder) {

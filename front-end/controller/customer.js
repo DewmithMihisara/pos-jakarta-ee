@@ -3,6 +3,9 @@ $(document).ready(function (){
     setAction();
 });
 function getAll() {
+    getCusIds();
+    setCusCmbAction();
+
     $('#cus-tbl-body').empty();
 
     $.ajax({

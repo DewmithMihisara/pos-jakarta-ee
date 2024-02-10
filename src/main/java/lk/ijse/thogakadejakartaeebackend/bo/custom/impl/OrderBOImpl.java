@@ -22,10 +22,12 @@ public class OrderBOImpl implements OrderBO {
     OrderDetailDAO orderDetailsDAO = DAOFactory.getDAOFactory().getDAO(DAOFactory.DAOTypes.ORDER_DETAILS);
     @Override
     public boolean saveOrder(OrderDTO orderDTO, DataSource pool) {
+        System.out.println("in save order method in OrderBOImpl.java file...!");
         try {
             Connection connection = pool.getConnection();
-
+            System.out.println("tis is connection object in OrderBOImpl.java file...! " + connection);
             if (orderDAO.exist(orderDTO.getId(),pool)){
+                System.out.println("Order already exists!");
                 return false;
             }else {
                 connection.setAutoCommit(false);

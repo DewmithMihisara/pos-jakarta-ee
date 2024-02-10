@@ -4,6 +4,9 @@ $(document).ready(function () {
 });
 
 function getAllItm() {
+    setItmIds();
+    setItmCmbAction();
+
     $('#itm-tbl-bdy').empty();
     $.ajax({
         url: "http://localhost:8080/thogakade_jakarta/item",
